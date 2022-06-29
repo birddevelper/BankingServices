@@ -1,4 +1,4 @@
-package com.bluebank.transactionservice.transactionservice.configs;
+package com.bluebank.transactionservice.configs;
 
 
 
@@ -20,7 +20,7 @@ public class MessagingConfig {
 
 
     @Bean
-    public Queue queue() {
+    public Queue newTransactionQueue() {
         return new Queue(QUEUE);
     }
 

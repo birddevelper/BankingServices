@@ -1,6 +1,6 @@
-package com.bluebank.transactionservice.transactionservice.services;
+package com.bluebank.transactionservice.services;
 
-import com.bluebank.transactionservice.transactionservice.models.Transaction;
+import com.bluebank.transactionservice.models.Transaction;
 
 import java.util.List;
 

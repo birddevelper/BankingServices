@@ -1,4 +1,4 @@
-package com.bluebank.transactionservice.transactionservice.models.responseModel;
+package com.bluebank.transactionservice.models.responseModel;
 
 
 import lombok.*;

@@ -1,6 +1,6 @@
-package com.bluebank.transactionservice.transactionservice.services;
+package com.bluebank.transactionservice.services;
 
-import com.bluebank.transactionservice.transactionservice.models.Transaction;
+import com.bluebank.transactionservice.models.Transaction;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
@@ -9,8 +9,6 @@ import java.util.List;
 @Service
 public class TransactionServiceImpl implements TransactionService{
 
-
-    String TRANSACTION_QUEUE;
 
 
     @Override
@@ -24,8 +22,10 @@ public class TransactionServiceImpl implements TransactionService{
     }
 
     @Override
-    @RabbitListener(queues = )
+    @RabbitListener(queues = "#{newTransactionQueue.name}")
     public void newTransaction(Transaction transaction) {
+
+        System.out.println("new Transaction received : " + transaction);
 
     }
 }

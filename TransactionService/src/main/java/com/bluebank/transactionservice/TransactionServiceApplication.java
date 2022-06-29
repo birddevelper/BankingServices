@@ -1,4 +1,4 @@
-package com.bluebank.transactionservice.transactionservice;
+package com.bluebank.transactionservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

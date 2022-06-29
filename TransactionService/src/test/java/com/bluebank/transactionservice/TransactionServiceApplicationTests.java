@@ -1,4 +1,4 @@
-package com.bluebank.transactionservice.transactionservice;
+package com.bluebank.transactionservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

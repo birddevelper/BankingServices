@@ -1,7 +1,9 @@
-package com.bluebank.transactionservice.transactionservice.models;
+package com.bluebank.transactionservice.models;
 
 import lombok.*;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Date;
 
 
@@ -11,8 +13,10 @@ import java.util.Date;
 @ToString
 @Getter
 @Setter
+@Entity
 public class Transaction {
 
+    @Id
     int ID;
     int account;
     float credit;
