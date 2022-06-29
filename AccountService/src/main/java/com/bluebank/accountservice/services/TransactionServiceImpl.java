@@ -3,6 +3,8 @@ package com.bluebank.accountservice.services;
 import com.bluebank.accountservice.config.MessagingConfig;
 import com.bluebank.accountservice.models.AccountBalance;
 import com.bluebank.accountservice.models.Transaction;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,12 +26,18 @@ public class TransactionServiceImpl implements TransactionService{
 
 
     @Value("${transaction-service.get-transactions-url}")
-    public static String GET_TRANSACTIONS_URI;
+    public  String GET_TRANSACTIONS_URI;
     @Value("${transaction-service.get-balance-url}")
-    public static String GET_BALANCE_URI;
+    public  String GET_BALANCE_URI;
 
     private RabbitTemplate rabbitmq;
     private WebClient webClient;
+
+    @Autowired
+    private Queue transactionQueue;
+
+    @Autowired
+    private DirectExchange directExchange;
 
     @Autowired
     public TransactionServiceImpl(RabbitTemplate rabbitMQ) {
@@ -41,7 +49,7 @@ public class TransactionServiceImpl implements TransactionService{
     @Override
     public void sendNewTransaction(Transaction transaction) {
 
-        rabbitmq.convertAndSend(MessagingConfig.EXCHANGE, MessagingConfig.ROUTING_KEY, transaction);
+        rabbitmq.convertAndSend(directExchange.getName(), transactionQueue.getName(), transaction);
 
     }
 

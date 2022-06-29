@@ -1,4 +1,5 @@
-package com.bluebank.accountservice.config;
+package com.bluebank.transactionservice.transactionservice.configs;
+
 
 
 import org.springframework.amqp.core.*;
@@ -21,11 +22,6 @@ public class MessagingConfig {
     @Bean
     public Queue queue() {
         return new Queue(QUEUE);
-    }
-
-    @Bean
-    public DirectExchange exchange() {
-        return new DirectExchange("");
     }
 
 

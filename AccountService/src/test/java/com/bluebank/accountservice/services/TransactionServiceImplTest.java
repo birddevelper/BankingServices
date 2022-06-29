@@ -10,7 +10,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import static org.mockito.ArgumentMatchers.eq;
+
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.json.BasicJsonTester;
 import org.springframework.boot.test.json.JsonContent;
@@ -29,12 +33,17 @@ class TransactionServiceImplTest {
     private TransactionService transactionService;
     private MockWebServer mockWebServer;
     private final BasicJsonTester json = new BasicJsonTester(this.getClass());
+
+    @Autowired
+    private Queue transactionQueue;
+
+    @Autowired
+    private DirectExchange directExchange;
+
     @BeforeEach
     void setUp() {
         mockWebServer = new MockWebServer();
         rabbitTemplateMock = Mockito.mock(RabbitTemplate.class);
-        TransactionServiceImpl.GET_TRANSACTIONS_URI = mockWebServer.url("/").url().toString();
-        TransactionServiceImpl.GET_BALANCE_URI = mockWebServer.url("/").url().toString();
         transactionService = new TransactionServiceImpl(rabbitTemplateMock);
 
     }
@@ -48,7 +57,7 @@ class TransactionServiceImplTest {
         transactionService.sendNewTransaction(transaction);
 
         Mockito.verify(this.rabbitTemplateMock)
-                .convertAndSend(eq(MessagingConfig.EXCHANGE), eq(MessagingConfig.ROUTING_KEY), eq(transaction));
+                .convertAndSend(eq(directExchange.getName()), eq(transactionQueue.getName()), eq(transaction));
     }
 
     @Test

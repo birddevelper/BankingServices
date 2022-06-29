@@ -122,7 +122,7 @@ public class AccountController {
 
 
     // Get account information by account number
-    @Operation(summary = "Get a notebook by its id")
+    @Operation(summary = "Get Account Information by it's accountNumber")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Account information successfully retrieved",
                     content = { @Content(mediaType = "application/json",
@@ -163,7 +163,7 @@ public class AccountController {
                     customer.getSureName(),
                     balance,
                     transactions);
-
+            // send account information as response with 200 status code
             return new ResponseEntity(accountInformationResponse, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
