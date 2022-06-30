@@ -19,20 +19,20 @@
     ],
     "vhosts": [
      {
-      "name": "\/banking"
+      "name": "banking"
      }
     ],
     "permissions": [
      {
       "user": "account_service",
-      "vhost": "\/banking",
+      "vhost": "banking",
       "configure": "",
       "write": ".*",
       "read": ".*"
      },
      {
         "user": "transaction_service",
-        "vhost": "\/banking",
+        "vhost": "banking",
         "configure": "",
         "write": ".*",
         "read": ".*"
