@@ -3,7 +3,7 @@
 
 ![Banking Service](https://m-shaeri.ir/blog/wp-content/uploads/2022/06/BankingServices.jpg)
 
-**Banking Services** is a sample tiny microservice application that performs Banking operation via Restful Webservices.
+**Banking Services** is a sample tiny microservice application that performs banking operations via Restful Webservices.
 
 It exposes 2 endpoint as following list :
 
