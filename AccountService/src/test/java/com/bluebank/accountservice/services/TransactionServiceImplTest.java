@@ -1,5 +1,6 @@
 package com.bluebank.accountservice.services;
 
+import com.bluebank.accountservice.AccountServiceApplication;
 import com.bluebank.accountservice.config.MessagingConfig;
 import com.bluebank.accountservice.models.AccountBalance;
 import com.bluebank.accountservice.models.Transaction;
@@ -8,6 +9,7 @@ import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import static org.mockito.ArgumentMatchers.eq;
 
@@ -20,6 +22,12 @@ import org.springframework.boot.test.json.BasicJsonTester;
 import org.springframework.boot.test.json.JsonContent;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import org.springframework.test.context.web.AnnotationConfigWebContextLoader;
 
 import java.util.Date;
 import java.util.List;
@@ -27,12 +35,12 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@TestPropertySource(locations = "classpath:application.properties")
 class TransactionServiceImplTest {
 
     private RabbitTemplate rabbitTemplateMock;
-    private TransactionService transactionService;
+    private TransactionServiceImpl transactionService;
     private MockWebServer mockWebServer;
-    private final BasicJsonTester json = new BasicJsonTester(this.getClass());
 
     @Autowired
     private Queue transactionQueue;
@@ -44,7 +52,8 @@ class TransactionServiceImplTest {
     void setUp() {
         mockWebServer = new MockWebServer();
         rabbitTemplateMock = Mockito.mock(RabbitTemplate.class);
-        transactionService = new TransactionServiceImpl(rabbitTemplateMock);
+        String testUrl = mockWebServer.getHostName() + ":" + mockWebServer.getPort()+"/";
+        transactionService = new TransactionServiceImpl(rabbitTemplateMock,transactionQueue,directExchange,testUrl,testUrl);
 
     }
 
@@ -75,11 +84,12 @@ class TransactionServiceImplTest {
         );
 
 
+
         List<Transaction> transactions = transactionService.getTransactions(87654321);
 
         RecordedRequest request = mockWebServer.takeRequest();
 
-        assertEquals( "87654321", request.getRequestUrl().queryParameter("account"));
+        assertEquals( "87654321", request.getRequestUrl().queryParameter("accountNumber"));
 
         assertEquals(100, transactions.get(0).getCredit());
         assertEquals("Initial Credit", transactions.get(0).getDescription());
@@ -101,7 +111,7 @@ class TransactionServiceImplTest {
 
         RecordedRequest request = mockWebServer.takeRequest();
 
-        assertEquals( "87654321", request.getRequestUrl().queryParameter("account"));
+        assertEquals( "87654321", request.getRequestUrl().queryParameter("accountNumber"));
 
         assertEquals(120.0, balance);
     }

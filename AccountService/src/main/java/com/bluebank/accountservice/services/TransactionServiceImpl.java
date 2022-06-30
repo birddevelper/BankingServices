@@ -26,24 +26,36 @@ public class TransactionServiceImpl implements TransactionService{
 
 
     @Value("${transaction-service.get-transactions-url}")
-    public  String GET_TRANSACTIONS_URI;
+    private   String GET_TRANSACTIONS_URI;
     @Value("${transaction-service.get-balance-url}")
-    public  String GET_BALANCE_URI;
+    private  String GET_BALANCE_URI ;
 
     private RabbitTemplate rabbitmq;
     private WebClient webClient;
 
-    @Autowired
-    private Queue transactionQueue;
+    private  Queue transactionQueue;
+
+    private  DirectExchange directExchange;
 
     @Autowired
-    private DirectExchange directExchange;
-
-    @Autowired
-    public TransactionServiceImpl(RabbitTemplate rabbitMQ) {
+    public TransactionServiceImpl(RabbitTemplate rabbitMQ, Queue transactionQueue, DirectExchange directExchange) {
 
         rabbitmq = rabbitMQ;
         webClient = WebClient.create();
+        this.transactionQueue = transactionQueue;
+        this.directExchange = directExchange;
+    }
+
+
+
+    public TransactionServiceImpl(RabbitTemplate rabbitMQ, Queue transactionQueue, DirectExchange directExchange, String getTransactionUri, String getBalanceUri ) {
+
+        rabbitmq = rabbitMQ;
+        webClient = WebClient.create();
+        this.transactionQueue = transactionQueue;
+        this.directExchange = directExchange;
+        GET_TRANSACTIONS_URI= getTransactionUri;
+        GET_BALANCE_URI = getBalanceUri;
     }
 
     @Override
@@ -57,7 +69,7 @@ public class TransactionServiceImpl implements TransactionService{
     public List<Transaction> getTransactions(int accountNumber) {
 
       return  webClient.get()
-                .uri( GET_TRANSACTIONS_URI+ "?account=" + String.valueOf(accountNumber) )
+                .uri( GET_TRANSACTIONS_URI+ "?accountNumber=" + String.valueOf(accountNumber) )
                 .retrieve()
                 .bodyToFlux(Transaction.class).collectList().block();
     }
@@ -66,7 +78,7 @@ public class TransactionServiceImpl implements TransactionService{
     public float getBalance(int accountNumber) {
 
         AccountBalance accountBalance =  webClient.get()
-                .uri(GET_BALANCE_URI+ "?account=" + String.valueOf(accountNumber))
+                .uri(GET_BALANCE_URI+ "?accountNumber=" + String.valueOf(accountNumber))
                 .retrieve()
                 .bodyToMono(AccountBalance.class).block();
 

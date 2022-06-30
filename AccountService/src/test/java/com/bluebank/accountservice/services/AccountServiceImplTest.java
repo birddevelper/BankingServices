@@ -3,6 +3,7 @@ package com.bluebank.accountservice.services;
 import com.bluebank.accountservice.models.Account;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.web.AnnotationConfigWebContextLoader;
@@ -18,14 +19,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-@ContextConfiguration(loader = AnnotationConfigWebContextLoader.class)
 @Transactional
 @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:beforeTest.sql")
 @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = "classpath:afterTest.sql")
+@ActiveProfiles("test")
 class AccountServiceImplTest {
 
     @Resource
-    AccountService accountService;
+    AccountServiceImpl accountService;
 
     @Test
     void createNewAccountForCustomer() {

@@ -56,7 +56,8 @@ public class AccountController {
                                        schema = @Schema(implementation = ErrorResponse.class))
             ),
             @ApiResponse(responseCode = "500", description = "Internal Error",
-                    content = @Content),
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "304", description = "Account creation failed",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class))
@@ -121,8 +122,8 @@ public class AccountController {
 
 
 
-    // Get account information by account number
-    @Operation(summary = "Get Account Information by it's accountNumber")
+    // GET /api/accounts/{accountNumber} - Get account information by account number
+    @Operation(summary = "Get Account Information by its accountNumber")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Account information successfully retrieved",
                     content = { @Content(mediaType = "application/json",
@@ -132,13 +133,14 @@ public class AccountController {
             @ApiResponse(responseCode = "404", description = "Account not found",
                     content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal Error",
-                    content = @Content) })
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class))) })
     @GetMapping(value = "/{accountNumber}", produces = { "application/json" })
     public ResponseEntity<AccountInformationResponse> getAccountInformation(@Parameter(description = "Requested account number")  @PathVariable int accountNumber) {
 
         try {
             // If account doesn't exist send 404 status code as response
-            if (accountService.accountExists(accountNumber) ){
+            if (!accountService.accountExists(accountNumber) ){
                 ErrorResponse errorResponse = new ErrorResponse("Account not found.",
                         "Requested account doesn't exist.");
                 return new ResponseEntity(errorResponse, HttpStatus.NOT_FOUND);

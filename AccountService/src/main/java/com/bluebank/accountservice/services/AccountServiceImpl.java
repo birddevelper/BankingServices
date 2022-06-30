@@ -56,6 +56,8 @@ public class AccountServiceImpl implements AccountService {
     // Check if the account number exists
     @Override
     public boolean accountExists(int accountNumber) {
-        return accountRepository.findById(accountNumber).isPresent();
+        Optional<Account> account = accountRepository.findByAccountNumberEquals(accountNumber);
+
+        return account.isPresent();
     }
 }
