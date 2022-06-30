@@ -5,12 +5,12 @@
 
 **Banking Services** is a sample tiny microservice application that performs banking operations via Restful Webservices.
 
-It exposes 2 endpoint as following list :
+It exposes 4 endpoint as following list :
 
 **Account Service :**
 
 - GET localhost:8080/api/accounts/{account number} (get account information)
-- POST localhost:8080/api/accounts (open a new account)
+- POST localhost:8080/api/accounts (open a new account, and returns the account number)
 
 
 **Transaction Service :**
@@ -27,10 +27,10 @@ docker-compose up
 ```
 **Note** : It may take time, because it needs to download all dependencies of the project.
 
-Following list of customers are inserted into database at application startup :
+Following list of customers are inserted into database at application startup, You can open accounts for theme :
 
 | Customer ID | Name | Surename |
-| :---         |     :---:      |          ---: |
+|   :---:   |  :---:   |  :---: |
 | 100   | Mostafa     | Shaeri    |
 | 200     | Alex       | Tailor      |
 | 300     | Mieke       | Anderson      |
@@ -38,7 +38,7 @@ Following list of customers are inserted into database at application startup :
 
 
 ## How to use
-This application is Restful and it follows OpenAPI specification in API documentation. Thanks to SwaggerUI, you can see endpoints documentation in a graphical user interface and try their functionality and see the response. After running the containers, you can access the application links as :
+This application follows OpenAPI specification in API documentation. Thanks to SwaggerUI, you can see endpoints documentation in a graphical user interface and try their functionality and see the response. After running the containers, you can access the application links as :
 
 - Account Service Rest webservices : http://localhost:8080/api/accounts
 - SwaggerUI : http://localhost:8080/swagger-ui.html
