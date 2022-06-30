@@ -4,6 +4,8 @@
     `sure_name` varchar(255) DEFAULT NULL,
     PRIMARY KEY (`id`)
     );*/
+TRUNCATE TABLE `customer`;
+TRUNCATE TABLE `account`;
 
 INSERT INTO `customer` (`id`, `name`, `sure_name`) VALUES
        (100,'Mostafa','Shaeri'),
