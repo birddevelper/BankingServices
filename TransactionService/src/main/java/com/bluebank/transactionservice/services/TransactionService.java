@@ -10,7 +10,7 @@ public interface TransactionService {
 
     public float getBalance(int accountNumber);
 
-    public void newTransaction(Transaction transaction);
+    public Transaction newTransaction(Transaction transaction);
 
 
 }
