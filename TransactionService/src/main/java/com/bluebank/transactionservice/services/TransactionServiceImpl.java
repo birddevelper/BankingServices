@@ -38,13 +38,13 @@ public class TransactionServiceImpl implements TransactionService{
 
     @Override
     @RabbitListener(queues = "#{newTransactionQueue.name}")
-    public Transaction newTransaction(Transaction transaction) {
+    public void newTransaction(Transaction transaction) {
         // This function listens to message broker queue for new transaction and inserts it into database
 
         System.out.println("New Transaction received : " + transaction);
 
         // Save the received Transaction into the database
-        return transactionRepository.save(transaction);
+        transactionRepository.save(transaction);
 
     }
 }

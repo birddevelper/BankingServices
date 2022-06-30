@@ -63,11 +63,9 @@ class TransactionServiceImplTest {
     @Test
     void newTransaction() throws ParseException {
         Date transactionDate=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2022-06-27 14:33:11");
-        Transaction transaction = new Transaction(12345678,100,0,transactionDate,"Test transaction");
-        Transaction storedTransaction = transactionService.newTransaction(transaction);
-        assertEquals(transaction.getCredit(),storedTransaction.getCredit());
-        assertEquals(transaction.getDebit(),storedTransaction.getDebit());
-        assertEquals(transaction.getAccount(),storedTransaction.getAccount());
-        assertEquals(transaction.getDescription(),storedTransaction.getDescription());
+        Transaction transaction = new Transaction(66351178,100,0,transactionDate,"Test transaction");
+        transactionService.newTransaction(transaction);
+        List<Transaction> transactions = transactionService.getTransactions(66351178);
+        assertEquals(1,transactions.size());
     }
 }

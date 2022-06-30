@@ -19,7 +19,7 @@ import java.util.Date;
 public class Transaction {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     int ID;
     int account;
     float credit;
