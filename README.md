@@ -25,7 +25,7 @@ It is a docker based application. Running below command in project's directory b
 ```bash
 docker-compose up
 ```
-
+**Note** : It may take time, because it needs to download all dependencies of the project.
 
 Following list of customers are inserted into database at application startup :
 
