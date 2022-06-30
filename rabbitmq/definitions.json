@@ -1,0 +1,46 @@
+{
+    "rabbit_version": "3.9.14",
+    "users": [
+     {
+      "name": "account_service",
+      "password": "1234",
+      "tags": ""
+     },
+     {
+        "name": "transaction_service",
+        "password": "1234",
+        "tags": ""
+    },
+     {
+      "name": "rabbitmq_admin",
+      "password": "1234@5",
+      "tags": "administrator"
+     }
+    ],
+    "vhosts": [
+     {
+      "name": "\/banking"
+     }
+    ],
+    "permissions": [
+     {
+      "user": "account_service",
+      "vhost": "\/banking",
+      "configure": "",
+      "write": ".*",
+      "read": ".*"
+     },
+     {
+        "user": "transaction_service",
+        "vhost": "\/banking",
+        "configure": "",
+        "write": ".*",
+        "read": ".*"
+       }
+    ],
+    "parameters": [],
+    "policies": [],
+    "queues": [],
+    "exchanges": [],
+    "bindings": []
+   }
