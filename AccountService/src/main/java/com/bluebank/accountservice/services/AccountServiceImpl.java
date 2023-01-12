@@ -14,7 +14,7 @@ public class AccountServiceImpl implements AccountService {
 
 
     @Autowired
-    AccountRepository accountRepository;
+    private AccountRepository accountRepository;
 
 
 
