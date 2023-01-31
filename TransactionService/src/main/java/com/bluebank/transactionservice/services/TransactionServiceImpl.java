@@ -12,7 +12,7 @@ import java.util.List;
 public class TransactionServiceImpl implements TransactionService{
 
     @Autowired
-    TransactionRepository transactionRepository;
+    private TransactionRepository transactionRepository;
 
     @Override
     public List<Transaction> getTransactions(int accountNumber) {
