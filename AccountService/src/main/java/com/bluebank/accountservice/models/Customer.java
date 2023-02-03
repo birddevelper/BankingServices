@@ -18,11 +18,11 @@ public class Customer {
 
     @Id
     @Column(name = "id")
-    int ID;
+    private int ID;
 
     @Column(name = "name")
-    String name;
+    privateString name;
 
     @Column(name = "sure_name")
-    String sureName;
+    private String sureName;
 }
