@@ -20,12 +20,12 @@ public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int ID;
-    int account;
-    float credit;
-    float debit;
-    Date transactionTime;
-    String description;
+    private int ID;
+    private int account;
+    private float credit;
+    private float debit;
+    private Date transactionTime;
+    private String description;
 
     public Transaction(int account, float credit, float debit, Date transactionTime, String description) {
         this.account = account;
